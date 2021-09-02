@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RxJS</title>
+</head>
+<body>
+    <button>Click me.</button>
+    <!-- CDN which used at tutorial -->
+    <!-- <script src="https://unpkg.com/@reactivex/rxjs@5.3.0/dist/global/Rx.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.min.js" integrity="sha512-y3JTS47nnpKORJX8Jn1Rlm+QgRIIZHtu3hWxal0e81avPrqUH48yk+aCi+gprT0RMAcpYa0WCkapxe+bpBHD6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.3.0/rxjs.umd.js" integrity="sha512-1Jz97rlEAHdMk6x3UWesQaEOhSZ3iG82PkqNr3N4bj/hqKaVQDPTeHW0//vU1ucY+pB5sZr5uNz1aO2qO5XkMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script>
+        const button = document.querySelector('button');
+
+        // this object defined as dictionary type
+        // and include 3 kind method below.
+        const observer = {
+            // next method like append, work_next
+            // called when subscribing observable
+            next: (value) => {
+                console.log(value);
+            },
+            // when raised error
+            // stop subscription
+            error: (error) => {
+                console.log(error);
+            },
+            // finished subscription
+            complete: () => {
+                console.log('Completed')
+            }
+        }
+
+        // https://stackoverflow.com/questions/39806285/referenceerror-rx-is-not-defined
+        // var Rx -> var rxjs
+
+        // Rx.Observable.fromEvent(button, 'click').subscribe(
+        //     (value) => console.log(value.clientX)
+        // )
+        const observable = new rxjs.Observable(subscriber => {
+            button.onclick = function(event) {
+                subscriber.next('clicked button.');
+            }
+
+            subscriber.next('A value');
+            subscriber.error('Error');
+            subscriber.next('A second value');
+        })
+        observable.subscribe(observer)
+        // console.log(observable)
+        
+        setTimeout(() => {
+            // can not find why got error `unsubscribe` is not defined
+            observable.unsubscribe();
+        }, 1000);
+
+    </script>
+</body>
+</html>
