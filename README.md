@@ -1,6 +1,9 @@
 # RxJS practice 
 
-for learning concept of `observable`.
+for learning concept of `observable`.  
+this practice uses `rxjs CDN`.
+
+all codes are include `index.html` script tag.  
 
 ---
 
